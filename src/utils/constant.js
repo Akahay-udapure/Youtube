@@ -52,7 +52,7 @@ export const popular = [
     { name: "Bollywood Music", url: "latestBollywoodmusic" },
 ];
 
-const GOOGLE_API_KEY = "AIzaSyDD6VwcBlmmhBDvecU4HWOHAZ7blvuP1wc";
+const GOOGLE_API_KEY = "AIzaSyD2nz6ApXtmVLtudzsLIxKOMZuYeja4F9U";
 
 export const YOUTUBE_VIDEOS_API =
     "https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=in&maxResults=100&videoCategoryId=17&key=" +
@@ -60,3 +60,6 @@ export const YOUTUBE_VIDEOS_API =
 
 export const YOUTUBE_SEARCH_API =
     "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
+
+export const YOUTUBE_VIDEO_SEARCH_API =
+`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&key=${GOOGLE_API_KEY}&q=` 

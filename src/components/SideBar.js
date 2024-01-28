@@ -5,10 +5,9 @@ import { useLocation } from "react-router-dom";
 
 const SideBar = () => {
     const location = useLocation();
-    console.log(location);
     const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
     return (
-        location.pathname == "/" && (
+        (location.pathname === "/" || location.pathname.includes("/searchResult")) && (
             <div
                 className={`overflow-y-auto overflow-x-hidden mx-4 max-h-[500px] col-span-1 cursor-pointer ${
                     isMenuOpen ? "w-[200px]" : "w-[70px]"

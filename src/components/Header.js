@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { YOUTUBE_LOGO, YOUTUBE_SEARCH_API } from "../utils/constant";
+import {
+    YOUTUBE_LOGO,
+    YOUTUBE_SEARCH_API
+} from "../utils/constant";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { RiVideoAddLine } from "react-icons/ri";
 import { IoIosSearch } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../redux/appSlice";
 import { CgClose } from "react-icons/cg";
-import { cacheResults } from "../redux/searchSlice";
+import { cacheResults, checkIsMenuSearch } from "../redux/searchSlice";
+import { Link } from "react-router-dom";
 
 const Header = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
-    const [showSuggestion, setShowSuggestions] = useState(false);
     const searchCache = useSelector((store) => store.search);
     const dispatch = useDispatch();
     const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
+    const [showSuggestion, setShowSuggestions] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -25,7 +29,6 @@ const Header = () => {
                 getSearchSuggestions();
             }
         }, 200);
-
         return () => clearTimeout(timer);
     }, [searchQuery]);
 
@@ -38,6 +41,12 @@ const Header = () => {
                 [searchQuery]: json[1],
             }),
         );
+    };
+
+
+    const handleSearch = () => {
+        dispatch(checkIsMenuSearch(false));
+        setShowSuggestions(false);
     };
 
     return (
@@ -72,7 +81,6 @@ const Header = () => {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         onFocus={() => setShowSuggestions(true)}
-                        onBlur={() => setShowSuggestions(false)}
                     />
                     <button className=" h-12 border border-gray-400 rounded-r-full p-4">
                         <IoIosSearch className="text-black text-xl" />
@@ -95,11 +103,18 @@ const Header = () => {
                     <div className="absolute w-[600px] bg-white border border-gray-100 rounded-lg">
                         <ul>
                             {suggestions.map((s) => (
-                                <li
-                                    key={s}
-                                    className="py-1 text-left px-4 hover:bg-gray-100 cursor-pointer">
-                                    {s}
-                                </li>
+                                <Link
+                                    to={
+                                        "/searchResult/" +
+                                        s.split(" ").join("+")
+                                    }
+                                    key={s}>
+                                    <li
+                                        onClick={() => handleSearch(s)}
+                                        className="py-1 text-left px-4 hover:bg-gray-100 cursor-pointer">
+                                        {s}
+                                    </li>
+                                </Link>
                             ))}
                         </ul>
                     </div>

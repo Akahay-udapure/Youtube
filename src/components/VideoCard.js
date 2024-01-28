@@ -4,13 +4,13 @@ import { useSelector } from "react-redux";
 const VideoCard = ({ info }) => {
     const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
     const { snippet } = info;
-    const { channelTitle, title, thumbnails } = snippet;
+    const { channelTitle, title, thumbnails} = snippet;
     return (
         <div className={`p-2 ${isMenuOpen ? "w-[255px]" : "w-[230px]"}`}>
             <img src={thumbnails.medium.url} className="rounded-lg" alt="" />
-            <ul className="py-2">
+            <ul className="py-2 text-left">
                 <li className="text-sm font-semibold">{title.slice(0, 30)}</li>
-                <li className="text-gray-500">{channelTitle}</li>
+                <li className="text-gray-500 text-sm">{channelTitle}</li>
             </ul>
         </div>
     );
